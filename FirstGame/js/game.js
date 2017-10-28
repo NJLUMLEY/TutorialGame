@@ -8,12 +8,16 @@ window.onload = function() {
 			game.load.image('star', 'assets/star.png');
 			game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
 			game.load.image('winner', 'assets/winner.png');
+			game.load.image('badGuy', 'assets/baddie.png');
+
 		}
 
 			var moveKeys
 			var score = 0;
 			var scoreText;
 			var player;
+			var healthText;
+			var health = 100;
 
 			function create() {
 //		This game uses physics, so we will start the ARCADE physics engine
@@ -46,13 +50,21 @@ window.onload = function() {
 				game.physics.arcade.enable(player);
 
 //		Player physics properties
-				player.body.bounce.y = 0.2;
-				player.body.gravity.y = 200;
+				player.body.bounce.y = 0.1;
+				player.body.gravity.y = 100;
 				player.body.collideWorldBounds = true;
 
 //		Two animations, walking left and right
 				player.animations.add('left' , [0, 1, 2, 3], 10, true);
 				player.animations.add('right', [5, 6, 7, 8], 10, true );
+
+// 		For the bad guy
+				enemy = game.add.sprite(400, game.world.height - 150, 'badGuy');
+				game.physics.arcade.enable(enemy);
+				enemy.body.bounce.y = 0.1;
+				enemy.body.gravity.y = 100;
+				enemy.body.collideWorldBounds = true;
+
 
 			moveKeys = game.input.keyboard.addKeys(
 					{
@@ -77,6 +89,7 @@ window.onload = function() {
 //				star.body.bounce.y = 0.7 + Math.random() * 0.2;
 			}
 				scoreText = game.add.text(16, 16, 'Score: ' + score, {fontSize: '32px', fill: '#000' });
+				healthText = game.add.text(600, 16, 'Health: ' + health, {fontSize: '32px', fill: '#000'});
 	}
 
 		function update () {
