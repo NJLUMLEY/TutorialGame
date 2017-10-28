@@ -13,6 +13,7 @@ window.onload = function() {
 			var moveKeys
 			var score = 0;
 			var scoreText;
+			var player;
 
 			function create() {
 //		This game uses physics, so we will start the ARCADE physics engine
