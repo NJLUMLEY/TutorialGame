@@ -9,6 +9,7 @@ window.onload = function() {
 			game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
 			game.load.image('winner', 'assets/winner.png');
 			game.load.image('badGuy', 'assets/baddie.png');
+			game.load.image('healthPack', 'assets/firstaid.png');
 
 		}
 
@@ -18,6 +19,7 @@ window.onload = function() {
 			var player;
 			var healthText;
 			var health = 100;
+			var healthPack;
 
 			function create() {
 //		This game uses physics, so we will start the ARCADE physics engine
@@ -85,6 +87,9 @@ window.onload = function() {
 //		Let gravity do its thing
 				star.body.gravity.y = 1000;
 
+				game.add.sprite(525, 368, 'healthPack');
+
+
 //		This just gives each star a slightly random bounce value
 //				star.body.bounce.y = 0.7 + Math.random() * 0.2;
 			}
@@ -130,7 +135,10 @@ window.onload = function() {
 		game.physics.arcade.collide(stars, platforms);
 //		If there is a collision between the player and a star, run 'collectStar'
 		game.physics.arcade.overlap(player, stars, collectStar, null, this);
+// Check for a collision between the player and the Health Pack
+		game.physics.arcade.collide(player, healthPack, moreHealth);
 	}
+
 		function collectStar(player, star)
 			{
 //		Removes the star from the screen
@@ -143,4 +151,15 @@ window.onload = function() {
 					player.kill();
 				}
 			}
+
+			function moreHealth(player, healthPack) {
+				healthPack.kill();
+				health += 20
+				healthText.text = 'Health: ' + health
+
+				if (healthText.text > 100){
+					healthText.text = 'Health: ' + health
+				}
+			}
+
 };
