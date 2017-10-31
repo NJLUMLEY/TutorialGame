@@ -21,6 +21,7 @@ window.onload = function() {
 			var health = 100;
 			var healthPack;
 			var badGuy;
+			var starCount = 12;
 
 			function create() {
 //		This game uses physics, so we will start the ARCADE physics engine
@@ -77,6 +78,11 @@ window.onload = function() {
 							'right': Phaser.KeyCode.D
 					}
 			);
+
+			if (starCount == 0) {
+				moreStars();
+			}
+
 			stars = game.add.group();
 			stars.enableBody = true;
 //		Here we'll create 12 of them evenly spaced apart
@@ -147,6 +153,7 @@ window.onload = function() {
 				star.kill();
 				score += 10;
 				scoreText.text = 'Score: ' + score;
+				starCount -= 1;
 
 				if (score > 115){
 					game.add.sprite(50, 50, 'winner');
@@ -163,5 +170,20 @@ window.onload = function() {
 					healthText.text = 'Health: ' + health
 				}
 			}
+
+			function moreStars() {
+
+				stars = game.add.group();
+				stars.enableBody = true;
+	//		Here we'll create 12 of them evenly spaced apart
+				for (var i = 0; i < 12; i++)
+				{
+	//		Create a star inside of the 'stars' group
+					var star = stars.create(i * 70, 0, 'star');
+
+	//		Let gravity do its thing
+					star.body.gravity.y = 1000;
+			}
+		}
 
 };
