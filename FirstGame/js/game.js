@@ -8,18 +8,19 @@ window.onload = function() {
 			game.load.image('star', 'assets/star.png');
 			game.load.spritesheet('dude', 'assets/dude.png', 32, 48);
 			game.load.image('winner', 'assets/winner.png');
-			game.load.image('badGuy', 'assets/baddie.png');
+			game.load.spritesheet('badGuy', 'assets/baddie.png', 30, 30);
 			game.load.image('healthPack', 'assets/firstaid.png');
 
 		}
 
-			var moveKeys
+			var moveKeys;
 			var score = 0;
 			var scoreText;
 			var player;
 			var healthText;
 			var health = 100;
 			var healthPack;
+			var badGuy;
 
 			function create() {
 //		This game uses physics, so we will start the ARCADE physics engine
@@ -100,6 +101,7 @@ window.onload = function() {
 		function update () {
 //		Collide the player and the stars with the platorms
 				var hitPlatform = game.physics.arcade.collide(player, platforms);
+				game.physics.arcade.collide(enemy, platforms);
 
 //		Reset the player velocity (movement)
 				player.body.velocity.x = 0;
