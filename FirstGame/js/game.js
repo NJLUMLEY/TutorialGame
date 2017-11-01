@@ -11,6 +11,8 @@ window.onload = function() {
 			game.load.spritesheet('badGuy', 'assets/baddie.png', 30, 30);
 			game.load.image('healthPack', 'assets/firstaid.png');
 			game.load.image('diamond', 'assets/diamond.png');
+			game.load.image('backgroundStage2', 'assets/bg2.jpg');
+			game.load.image('backgroundThree', 'assets/skybg3.jpg');
 
 		} // End Preload
 
@@ -25,6 +27,7 @@ window.onload = function() {
 			var healthPack;
 			var badGuy;
 			var starCount = 12;
+			var stage = 1;
 
 			function create() {
 //		This game uses physics, so we will start the ARCADE physics engine
@@ -139,9 +142,24 @@ window.onload = function() {
 			player.body.velocity.y = -350;
 		}
 
-		if (starCount == 0) {
+// TODO: Work for the stages and starCount
+
+		if (starCount = 0) {
+			stage + 1;
+		}
+
+		if (stage = 2) {
 			moreStars();
-			starCount == 12;
+			starCount = 12;
+			game.add.sprite(0, 0, 'backgroundStage2')
+		}
+		else if (stage = 3) {
+			moreStars();
+			starCount = 12;
+			game.add.sprite(0, 0, 'backgroundThree')
+		}
+		else{
+			// TODO
 		}
 
 //		Have the stars collide with the platforms
@@ -186,7 +204,7 @@ window.onload = function() {
 					var star = stars.create(i * 70, 0, 'star');
 
 	//		Let gravity do its thing
-					star.body.gravity.y = 1000;
+					star.body.gravity.y = 2000;
 			}
 		} // End moreStars
 
