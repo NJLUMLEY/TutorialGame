@@ -57,8 +57,8 @@ window.onload = function() {
 				game.physics.arcade.enable(player);
 
 //		Player physics properties
-				player.body.bounce.y = 0.1;
-				player.body.gravity.y = 100;
+				player.body.bounce.y = 0.2;
+				player.body.gravity.y = 300;
 				player.body.collideWorldBounds = true;
 
 //		Two animations, walking left and right
@@ -136,7 +136,7 @@ window.onload = function() {
 //		Allow the player to jump if they are touching the ground.
 		if (moveKeys.up.isDown && player.body.touching.down && hitPlatform)
 		{
-			player.body.velocity.y = -200;
+			player.body.velocity.y = -350;
 		}
 
 		if (starCount == 0) {
