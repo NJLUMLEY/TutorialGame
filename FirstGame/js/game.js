@@ -11,7 +11,9 @@ window.onload = function() {
 			game.load.spritesheet('badGuy', 'assets/baddie.png', 30, 30);
 			game.load.image('healthPack', 'assets/firstaid.png');
 
-		}
+		} // End Preload
+
+		// Global Variables
 
 			var moveKeys;
 			var score = 0;
@@ -102,7 +104,7 @@ window.onload = function() {
 			}
 				scoreText = game.add.text(16, 16, 'Score: ' + score, {fontSize: '32px', fill: '#000' });
 				healthText = game.add.text(600, 16, 'Health: ' + health, {fontSize: '32px', fill: '#000'});
-	}
+	} // End Create
 
 		function update () {
 //		Collide the player and the stars with the platorms
@@ -145,7 +147,7 @@ window.onload = function() {
 		game.physics.arcade.overlap(player, stars, collectStar, null, this);
 // Check for a collision between the player and the Health Pack
 		game.physics.arcade.collide(player, healthPack, moreHealth);
-	}
+	} // End Update
 
 		function collectStar(player, star)
 			{
@@ -159,7 +161,7 @@ window.onload = function() {
 					game.add.sprite(50, 50, 'winner');
 					player.kill();
 				}
-			}
+			} // End collectStar
 
 			function moreHealth(player, healthPack) {
 				healthPack.kill();
@@ -169,7 +171,7 @@ window.onload = function() {
 				if (healthText.text > 100){
 					healthText.text = 'Health: ' + health
 				}
-			}
+			} // End moreHealth
 
 			function moreStars() {
 
@@ -184,6 +186,6 @@ window.onload = function() {
 	//		Let gravity do its thing
 					star.body.gravity.y = 1000;
 			}
-		}
+		} // End moreStars
 
-};
+}; // End Form
