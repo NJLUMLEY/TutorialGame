@@ -10,6 +10,7 @@ window.onload = function() {
 			game.load.image('winner', 'assets/winner.png');
 			game.load.spritesheet('badGuy', 'assets/baddie.png', 30, 30);
 			game.load.image('healthPack', 'assets/firstaid.png');
+			game.load.image('diamond', 'assets/diamond.png');
 
 		} // End Preload
 
@@ -81,10 +82,6 @@ window.onload = function() {
 					}
 			);
 
-			if (starCount == 0) {
-				moreStars();
-			}
-
 			stars = game.add.group();
 			stars.enableBody = true;
 //		Here we'll create 12 of them evenly spaced apart
@@ -117,14 +114,14 @@ window.onload = function() {
 			if (moveKeys.left.isDown)
 			{
 //		Move to the left
-					player.body.velocity.x = -150;
+					player.body.velocity.x = -400;
 
 					player.animations.play('left');
 			}
 				else if (moveKeys.right.isDown)
 				{
 //		Move to the right
-					player.body.velocity.x = 150;
+					player.body.velocity.x = 400;
 
 					player.animations.play('right');
 				}
@@ -139,8 +136,14 @@ window.onload = function() {
 //		Allow the player to jump if they are touching the ground.
 		if (moveKeys.up.isDown && player.body.touching.down && hitPlatform)
 		{
-			player.body.velocity.y = -350;
+			player.body.velocity.y = -200;
 		}
+
+		if (starCount == 0) {
+			moreStars();
+			starCount == 12;
+		}
+
 //		Have the stars collide with the platforms
 		game.physics.arcade.collide(stars, platforms);
 //		If there is a collision between the player and a star, run 'collectStar'
@@ -149,18 +152,17 @@ window.onload = function() {
 		game.physics.arcade.collide(player, healthPack, moreHealth);
 	} // End Update
 
-		function collectStar(player, star)
-			{
+		function collectStar(player, star) {
 //		Removes the star from the screen
 				star.kill();
 				score += 10;
 				scoreText.text = 'Score: ' + score;
 				starCount -= 1;
 
-				if (score > 115){
+	/*			if (score > 115){
 					game.add.sprite(50, 50, 'winner');
 					player.kill();
-				}
+			} */
 			} // End collectStar
 
 			function moreHealth(player, healthPack) {
