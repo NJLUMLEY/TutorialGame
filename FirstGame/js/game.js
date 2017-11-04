@@ -145,9 +145,10 @@ window.onload = function() {
 // TODO: Work for the stages and starCount
 
 		if (starCount = 0) {
-			stage + 1;
+				moreStars();
+				starCount = 12;
 		}
-
+/*
 		if (stage = 2) {
 			moreStars();
 			starCount = 12;
@@ -161,7 +162,7 @@ window.onload = function() {
 		else{
 			// TODO
 		}
-
+*/
 //		Have the stars collide with the platforms
 		game.physics.arcade.collide(stars, platforms);
 //		If there is a collision between the player and a star, run 'collectStar'
