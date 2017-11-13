@@ -96,7 +96,8 @@ window.onload = function() {
 //		Let gravity do its thing
 				star.body.gravity.y = 1000;
 
-				game.add.sprite(525, 368, 'healthPack');
+				healthPack = game.add.sprite(525, 368, 'healthPack');
+				healthPack.enableBody = true;
 
 
 //		This just gives each star a slightly random bounce value
@@ -107,9 +108,11 @@ window.onload = function() {
 	} // End Create
 
 		function update () {
-//		Collide the player and the stars with the platorms
+
+			// Collision Events
 				var hitPlatform = game.physics.arcade.collide(player, platforms);
 				game.physics.arcade.collide(enemy, platforms);
+				game.physics.arcade.collide(healthPack, player, moreHealth);
 
 //		Reset the player velocity (movement)
 				player.body.velocity.x = 0;
@@ -141,13 +144,6 @@ window.onload = function() {
 		{
 			player.body.velocity.y = -350;
 		}
-
-// TODO: Work for the stages and starCount
-
-		if (starCount = 0) {
-				moreStars();
-				starCount = 12;
-		}
 /*
 		if (stage = 2) {
 			moreStars();
@@ -167,21 +163,23 @@ window.onload = function() {
 		game.physics.arcade.collide(stars, platforms);
 //		If there is a collision between the player and a star, run 'collectStar'
 		game.physics.arcade.overlap(player, stars, collectStar, null, this);
-// Check for a collision between the player and the Health Pack
-		game.physics.arcade.collide(player, healthPack, moreHealth);
+
 	} // End Update
 
 		function collectStar(player, star) {
 //		Removes the star from the screen
 				star.kill();
 				score += 10;
+				console.log('Score 10 Points');
 				scoreText.text = 'Score: ' + score;
 				starCount -= 1;
 
-	/*			if (score > 115){
-					game.add.sprite(50, 50, 'winner');
-					player.kill();
-			} */
+				if (starCount < 1) {
+						moreStars();
+						starCount = 12;
+
+				}
+
 			} // End collectStar
 
 			function moreHealth(player, healthPack) {
