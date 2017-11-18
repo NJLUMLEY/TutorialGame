@@ -70,10 +70,21 @@ window.onload = function() {
 
 // 		For the bad guy
 				enemy = game.add.sprite(400, game.world.height - 150, 'badGuy');
+				enemy.enableBody = true;
 				game.physics.arcade.enable(enemy);
 				enemy.body.bounce.y = 0.1;
 				enemy.body.gravity.y = 100;
 				enemy.body.collideWorldBounds = true;
+
+				 var enemyMovement = game.add.tween(enemy).to(
+				 	{ x : 1000},
+				 	2000,
+				 	Phaser.Easing.Default,
+				 	true,
+				 	'',
+				 	'',
+				 	true,
+			);
 
 
 			moveKeys = game.input.keyboard.addKeys(
@@ -113,6 +124,7 @@ window.onload = function() {
 				var hitPlatform = game.physics.arcade.collide(player, platforms);
 				game.physics.arcade.collide(enemy, platforms);
 				game.physics.arcade.collide(player, healthPack, moreHealth);
+				game.physics.arcade.collide(player, enemy, loseHealth);
 
 //		Reset the player velocity (movement)
 				player.body.velocity.x = 0;
@@ -206,5 +218,9 @@ window.onload = function() {
 					star.body.gravity.y = 2000;
 			}
 		} // End moreStars
+
+			function loseHealth(){
+				console.log('Player and enemy collision');
+			}
 
 }; // End Form
