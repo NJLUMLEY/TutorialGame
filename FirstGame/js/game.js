@@ -75,6 +75,7 @@ window.onload = function() {
 				enemy.body.bounce.y = 0.1;
 				enemy.body.gravity.y = 100;
 				enemy.body.collideWorldBounds = true;
+				enemy.anchor.setTo(0.5, 0.5);
 
 				 var enemyMovement = game.add.tween(enemy).to(
 				 	{ x : 1000},
@@ -85,7 +86,6 @@ window.onload = function() {
 				 	'',
 				 	true,
 			);
-
 
 			moveKeys = game.input.keyboard.addKeys(
 					{
@@ -123,7 +123,7 @@ window.onload = function() {
 			// Collision Events
 				var hitPlatform = game.physics.arcade.collide(player, platforms);
 				game.physics.arcade.collide(enemy, platforms);
-				game.physics.arcade.collide(player, healthPack, moreHealth);
+				game.physics.arcade.collide(healthPack, player, moreHealth);
 				game.physics.arcade.collide(player, enemy, loseHealth);
 
 //		Reset the player velocity (movement)
@@ -197,10 +197,10 @@ window.onload = function() {
 			function moreHealth(player, healthPack) {
 				healthPack.kill();
 				health += 20
-				healthText.text = 'Health: ' + health
+				healthText.text = 'Health: ' + health;
 
 				if (healthText.text > 100){
-					healthText.text = 'Health: ' + health
+					healthText.text = 'Health: ' + health;
 				}
 			} // End moreHealth
 
@@ -221,6 +221,19 @@ window.onload = function() {
 
 			function loseHealth(){
 				console.log('Player and enemy collision');
-			}
+				health -= 20;
+				healthText.text = 'Health: ' + health;
+				
+				// Reset the position of the player
+			  //(32, game.world.height - 50);
+
+
+				if (health <= 0) {
+	//				player.kill();
+	//				star.kill();
+	//				healthPack.kill();
+					game.add.sprite(0, 0, 'gameOver');
+				}
+			} // End loseHealth
 
 }; // End Form
