@@ -13,6 +13,7 @@ window.onload = function() {
 			game.load.image('diamond', 'assets/diamond.png');
 			game.load.image('backgroundStage2', 'assets/bg2.jpg');
 			game.load.image('backgroundThree', 'assets/skybg3.jpg');
+			game.load.image('gameOver', 'assets/skybg3.jpg');
 
 		} // End Preload
 
@@ -71,10 +72,10 @@ window.onload = function() {
 // 		For the bad guy
 				enemy = game.add.sprite(400, game.world.height - 150, 'badGuy');
 				enemy.enableBody = true;
+				enemy.collideWorldBounds = true;
 				game.physics.arcade.enable(enemy);
 				enemy.body.bounce.y = 0.1;
 				enemy.body.gravity.y = 100;
-				enemy.body.collideWorldBounds = true;
 				enemy.anchor.setTo(0.5, 0.5);
 
 				 var enemyMovement = game.add.tween(enemy).to(
@@ -86,6 +87,13 @@ window.onload = function() {
 				 	'',
 				 	true,
 			);
+
+			if (enemy.x > game.world.width){
+				enemy.body.velocity.x *= -1;
+			}
+			else if (enemy.x < 0){
+				enemy.body.velocity.x *= -1;
+			}
 
 			moveKeys = game.input.keyboard.addKeys(
 					{
@@ -123,7 +131,7 @@ window.onload = function() {
 			// Collision Events
 				var hitPlatform = game.physics.arcade.collide(player, platforms);
 				game.physics.arcade.collide(enemy, platforms);
-				game.physics.arcade.collide(healthPack, player, moreHealth);
+				game.physics.arcade.overlap(healthPack, player, moreHealth);
 				game.physics.arcade.collide(player, enemy, loseHealth);
 
 //		Reset the player velocity (movement)
@@ -158,8 +166,8 @@ window.onload = function() {
 		}
 /*
 		if (stage = 2) {
-			moreStars();
-			starCount = 12;
+//			moreStars();
+//			starCount = 12;
 			game.add.sprite(0, 0, 'backgroundStage2')
 		}
 		else if (stage = 3) {
@@ -189,6 +197,7 @@ window.onload = function() {
 				if (starCount < 1) {
 						moreStars();
 						starCount = 12;
+						stage ++;
 
 				}
 
@@ -223,12 +232,11 @@ window.onload = function() {
 				console.log('Player and enemy collision');
 				health -= 20;
 				healthText.text = 'Health: ' + health;
-				
+
 				// Reset the position of the player
 			  //(32, game.world.height - 50);
 
-
-				if (health <= 0) {
+				if (health <= 10) {
 	//				player.kill();
 	//				star.kill();
 	//				healthPack.kill();
