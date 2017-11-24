@@ -24,8 +24,8 @@ window.onload = function() {
 			var scoreText;
 			var player;
 			var healthText;
-			var health = 100;
 			var healthPack;
+			var health = 100;
 			var badGuy;
 			var starCount = 12;
 			var stage = 1;
@@ -117,13 +117,17 @@ window.onload = function() {
 
 				healthPack = game.add.sprite(525, 368, 'healthPack');
 				healthPack.enableBody = true;
+				game.physics.arcade.enable(healthPack)
 
 
 //		This just gives each star a slightly random bounce value
 //				star.body.bounce.y = 0.7 + Math.random() * 0.2;
-			}
+} // End of the Stars
+
+// Add the score and health texts
 				scoreText = game.add.text(16, 16, 'Score: ' + score, {fontSize: '32px', fill: '#000' });
 				healthText = game.add.text(600, 16, 'Health: ' + health, {fontSize: '32px', fill: '#000'});
+
 	} // End Create
 
 		function update () {
@@ -131,7 +135,7 @@ window.onload = function() {
 			// Collision Events
 				var hitPlatform = game.physics.arcade.collide(player, platforms);
 				game.physics.arcade.collide(enemy, platforms);
-				game.physics.arcade.overlap(healthPack, player, moreHealth);
+				game.physics.arcade.collide(healthPack, player, moreHealth);
 				game.physics.arcade.collide(player, enemy, loseHealth);
 
 //		Reset the player velocity (movement)
@@ -203,14 +207,14 @@ window.onload = function() {
 
 			} // End collectStar
 
-			function moreHealth(player, healthPack) {
+			function moreHealth(healthPack, player) {
 				healthPack.kill();
 				health += 20
 				healthText.text = 'Health: ' + health;
 
-				if (healthText.text > 100){
-					healthText.text = 'Health: ' + health;
-				}
+//				if (healthText.text > 100){
+//					healthText.text = 'Health: ' + health;
+//				}
 			} // End moreHealth
 
 			function moreStars() {
