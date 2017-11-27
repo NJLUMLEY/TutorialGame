@@ -116,8 +116,8 @@ window.onload = function() {
 				star.body.gravity.y = 1000;
 
 				healthPack = game.add.sprite(525, 368, 'healthPack');
-				healthPack.enableBody = true;
-				game.physics.arcade.enable(healthPack)
+//				healthPack.enableBody = true;
+				game.physics.arcade.enable(healthPack);
 
 
 //		This just gives each star a slightly random bounce value
@@ -135,7 +135,7 @@ window.onload = function() {
 			// Collision Events
 				var hitPlatform = game.physics.arcade.collide(player, platforms);
 				game.physics.arcade.collide(enemy, platforms);
-				game.physics.arcade.collide(healthPack, player, moreHealth);
+				var extraHealth = game.physics.arcade.collide(healthPack, player, moreHealth);
 				game.physics.arcade.collide(player, enemy, loseHealth);
 
 //		Reset the player velocity (movement)
@@ -209,12 +209,13 @@ window.onload = function() {
 
 			function moreHealth(healthPack, player) {
 				healthPack.kill();
-				health += 20
+				health + 20
 				healthText.text = 'Health: ' + health;
 
-//				if (healthText.text > 100){
-//					healthText.text = 'Health: ' + health;
-//				}
+				if (health > 100){
+					health = 100;
+					healthText.text = 'Health: ' + health;
+				}
 			} // End moreHealth
 
 			function moreStars() {
