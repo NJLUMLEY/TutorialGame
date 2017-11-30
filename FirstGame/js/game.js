@@ -14,6 +14,7 @@ window.onload = function() {
 			game.load.image('backgroundStage2', 'assets/bg2.jpg');
 			game.load.image('backgroundThree', 'assets/skybg3.jpg');
 			game.load.image('gameOver', 'assets/skybg3.jpg');
+			game.load.image('youWin', 'assets/winner.png');
 
 		} // End Preload
 
@@ -115,14 +116,14 @@ window.onload = function() {
 //		Let gravity do its thing
 				star.body.gravity.y = 1000;
 
-				healthPack = game.add.sprite(525, 368, 'healthPack');
-//				healthPack.enableBody = true;
-				game.physics.arcade.enable(healthPack);
-
-
 //		This just gives each star a slightly random bounce value
 //				star.body.bounce.y = 0.7 + Math.random() * 0.2;
 } // End of the Stars
+
+healthPack = game.add.sprite(525, 368, 'healthPack');
+//				healthPack.enableBody = true;
+game.physics.arcade.enable(healthPack);
+
 
 // Add the score and health texts
 				scoreText = game.add.text(16, 16, 'Score: ' + score, {fontSize: '32px', fill: '#000' });
@@ -135,7 +136,7 @@ window.onload = function() {
 			// Collision Events
 				var hitPlatform = game.physics.arcade.collide(player, platforms);
 				game.physics.arcade.collide(enemy, platforms);
-				var extraHealth = game.physics.arcade.collide(healthPack, player, moreHealth);
+				var extraHealth = game.physics.arcade.overlap(healthPack, player, moreHealth);
 				game.physics.arcade.collide(player, enemy, loseHealth);
 
 //		Reset the player velocity (movement)
@@ -188,6 +189,10 @@ window.onload = function() {
 //		If there is a collision between the player and a star, run 'collectStar'
 		game.physics.arcade.overlap(player, stars, collectStar, null, this);
 
+			if (score == 1000) {
+				winner();
+			}
+
 	} // End Update
 
 		function collectStar(player, star) {
@@ -208,14 +213,15 @@ window.onload = function() {
 			} // End collectStar
 
 			function moreHealth(healthPack, player) {
+				console.log('hit now');
 				healthPack.kill();
-				health + 20
+				health += 20;
 				healthText.text = 'Health: ' + health;
 
-				if (health > 100){
-					health = 100;
-					healthText.text = 'Health: ' + health;
-				}
+	//			if (health > 100){
+	//				health = 100;
+	//				healthText.text = 'Health: ' + health;
+	//			}
 			} // End moreHealth
 
 			function moreStars() {
@@ -248,5 +254,9 @@ window.onload = function() {
 					game.add.sprite(0, 0, 'gameOver');
 				}
 			} // End loseHealth
+
+			function winner() {
+				game.add.sprite(0, 0, 'youWin');
+			}
 
 }; // End Form
