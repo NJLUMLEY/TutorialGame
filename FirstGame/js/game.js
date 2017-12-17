@@ -13,7 +13,7 @@ window.onload = function() {
 			game.load.image('diamond', 'assets/diamond.png');
 			game.load.image('backgroundStage2', 'assets/bg2.jpg');
 			game.load.image('backgroundThree', 'assets/skybg3.jpg');
-			game.load.image('gameOver', 'assets/skybg3.jpg');
+			game.load.image('gameOver', 'assets/skybg3.jpg'); // Change this when Stages work
 			game.load.image('youWin', 'assets/winner.png');
 
 		} // End Preload
@@ -218,10 +218,11 @@ game.physics.arcade.enable(healthPack);
 				health += 20;
 				healthText.text = 'Health: ' + health;
 
-	//			if (health > 100){
-	//				health = 100;
-	//				healthText.text = 'Health: ' + health;
-	//			}
+				if (health >= 100){
+					health = 100;
+					healthText.text = 'Health: ' + health;
+					healthPack = game.add.sprite(525, 368, 'healthPack');
+				}
 			} // End moreHealth
 
 			function moreStars() {
