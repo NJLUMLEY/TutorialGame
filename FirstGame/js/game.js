@@ -1,3 +1,4 @@
+rocket
 window.onload = function() {
 
 		var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
@@ -73,8 +74,8 @@ window.onload = function() {
 // 		For the bad guy
 				enemy = game.add.sprite(400, game.world.height - 150, 'badGuy');
 				enemy.enableBody = true;
-				enemy.collideWorldBounds = true;
 				game.physics.arcade.enable(enemy);
+				enemy.collideWorldBounds = true;
 				enemy.body.bounce.y = 0.1;
 				enemy.body.gravity.y = 100;
 				enemy.anchor.setTo(0.5, 0.5);
